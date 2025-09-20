@@ -4,6 +4,7 @@ import '../services/auth_service.dart';
 import '../services/db_service.dart';
 import '../widgets/ad_banner.dart';
 import '../widgets/subscribe_button.dart';
+import 'login_screen.dart'; // <-- Add this import
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -21,7 +22,13 @@ class HomeScreen extends StatelessWidget {
             icon: const Icon(Icons.logout),
             onPressed: () async {
               await AuthService().signOut();
-              if (context.mounted) Navigator.of(context).pop();
+              if (context.mounted) {
+                // Replace the current screen with the LoginScreen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              }
             },
           )
         ],
@@ -40,8 +47,9 @@ class HomeScreen extends StatelessWidget {
               StreamBuilder(
                 stream: db.watchUserProfile(user.uid),
                 builder: (context, snapshot) {
-                  if (!snapshot.hasData)
+                  if (!snapshot.hasData) {
                     return const Text('Loading profile...');
+                  }
                   final data = snapshot.data!.data() ?? {};
                   return Text('Profile: $data');
                 },
