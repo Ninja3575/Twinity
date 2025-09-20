@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "699003558638",
+    "project_id": "twinity-app",
+    "storage_bucket": "twinity-app.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699003558638:android:84053ddf8b343170acb1ff",
+        "android_client_info": {
+          "package_name": "com.example.twinity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGLtz0fHn647iAJQ0M0wTW472H8kr5rRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
