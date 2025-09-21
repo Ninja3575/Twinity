@@ -17,6 +17,7 @@ class AuthWrapper extends StatelessWidget {
           if (user == null) {
             return const LoginScreen();
           } else {
+            // After login, wait until the user document exists, then show the MainScreen
             return FutureBuilder<bool>(
               future: DbService().doesUserExist(user.uid),
               builder: (context, userSnapshot) {
@@ -32,6 +33,7 @@ class AuthWrapper extends StatelessWidget {
             );
           }
         }
+        // While checking auth state, show a loading indicator
         return const Scaffold(
           body: Center(
             child: CircularProgressIndicator(),

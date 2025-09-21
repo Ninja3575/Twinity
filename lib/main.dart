@@ -21,6 +21,8 @@ class TwinityApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.orange[800],
+        cardColor: Colors.orange[300],
       ),
       home: const AuthWrapper(), // Use the AuthWrapper as the home
     );

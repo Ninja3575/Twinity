@@ -21,7 +21,7 @@ class DbService {
     }
   }
 
-  /// **ADD THIS FUNCTION**
+  /// **THIS FUNCTION WAS MISSING**
   Future<bool> doesUserExist(String userId) async {
     final userRef = _db.collection('users').doc(userId);
     final doc = await userRef.get();
