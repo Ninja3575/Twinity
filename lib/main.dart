@@ -1,11 +1,13 @@
-// lib/main.dart
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'providers/user_provider.dart';
-import 'screens/home_screen.dart';
-import 'screens/login_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'auth_wrapper.dart'; // Import the new wrapper
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const TwinityApp());
 }
 
@@ -14,31 +16,16 @@ class TwinityApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (_) {
-        final up = UserProvider();
-        up.loadFromPrefs(); // load persisted user on start
-        return up;
-      },
-      child: MaterialApp(
-        title: 'Twinity',
-        theme: ThemeData.dark(),
-        home: const RootDecider(),
+    return MaterialApp(
+      title: 'Twinity',
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.orange[800],
+        cardColor: Colors.orange[300],
       ),
+      // Use the AuthWrapper as the entry point of the app
+      home: const AuthWrapper(),
     );
-  }
-}
-
-class RootDecider extends StatelessWidget {
-  const RootDecider({super.key});
-  @override
-  Widget build(BuildContext context) {
-    return Consumer<UserProvider>(builder: (context, userProv, _) {
-      if (userProv.isLoggedIn) {
-        return const HomeScreen(); // or main app scaffold
-      } else {
-        return const LoginScreen();
-      }
-    });
   }
 }

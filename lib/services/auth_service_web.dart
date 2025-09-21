@@ -5,8 +5,7 @@ class AuthService {
 
   Future<User?> signInWithGoogle() async {
     GoogleAuthProvider googleProvider = GoogleAuthProvider();
-    final UserCredential userCredential =
-    await _auth.signInWithPopup(googleProvider);
+    final UserCredential userCredential = await _auth.signInWithPopup(googleProvider);
     return userCredential.user;
   }
 

@@ -2,16 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:twinity/screens/login_screen.dart';
 import 'package:twinity/screens/main_screen.dart';
+import 'package:twinity/screens/create_profile_screen.dart'; // Import new screen
 import 'package:twinity/services/db_service.dart';
 
-class AuthWrapper extends StatefulWidget {
+class AuthWrapper extends StatelessWidget {
   const AuthWrapper({super.key});
 
-  @override
-  State<AuthWrapper> createState() => _AuthWrapperState();
-}
-
-class _AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
@@ -20,26 +16,29 @@ class _AuthWrapperState extends State<AuthWrapper> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Scaffold(body: Center(child: CircularProgressIndicator()));
         }
-        if (snapshot.hasData && snapshot.data != null) {
-          // If the user is logged in, use a FutureBuilder to ensure their profile is created
-          return FutureBuilder(
-            future: DbService().updateUserProfile(snapshot.data!.uid, {
-              'name': snapshot.data!.displayName,
-              'email': snapshot.data!.email,
-              'photoURL': snapshot.data!.photoURL,
-            }),
-            builder: (context, dbSnapshot) {
-              if (dbSnapshot.connectionState == ConnectionState.done) {
-                // Once the database operation is complete, show the main screen
+
+        final User? user = snapshot.data;
+        if (user == null) {
+          return const LoginScreen();
+        } else {
+          // Check if the user document exists in Firestore
+          return FutureBuilder<bool>(
+            future: DbService().doesUserExist(user.uid),
+            builder: (context, userSnapshot) {
+              if (userSnapshot.connectionState == ConnectionState.waiting) {
+                return const Scaffold(body: Center(child: CircularProgressIndicator()));
+              }
+              // If user document exists, go to main screen
+              if (userSnapshot.data == true) {
                 return const MainScreen();
               }
-              // While the database is being updated, show a loading indicator
-              return const Scaffold(body: Center(child: CircularProgressIndicator()));
+              // Otherwise, go to create profile screen
+              else {
+                return CreateProfileScreen(user: user);
+              }
             },
           );
         }
-        // If the user is not logged in, show the login screen
-        return const LoginScreen();
       },
     );
   }
