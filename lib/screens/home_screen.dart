@@ -19,7 +19,6 @@ class _HomeScreenState extends State<HomeScreen> {
       return 0;
     }
     // This is a placeholder logic. You should replace it with your actual subscription check.
-    // For now, it just checks if the list is not empty.
     if (subsData.isNotEmpty) {
       return 12000; // As seen in the screenshot
     }
@@ -65,15 +64,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text("Welcome, ${name.toUpperCase()}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
-                              const Text("Signed in", style: TextStyle(color: Colors.white70)),
-                              // Conditionally show daily sub points
-                              if (dailySubPoints > 0)
-                                Text("Daily from subs: $dailySubPoints pts", style: const TextStyle(color: Colors.white70)),
-                            ],
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("Welcome, ${name.toUpperCase()}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
+                                const Text("Signed in", style: TextStyle(color: Colors.white70)),
+                                // Conditionally show daily sub points
+                                if (dailySubPoints > 0)
+                                  Text("Daily from subs: $dailySubPoints pts", style: const TextStyle(color: Colors.white70)),
+                              ],
+                            ),
                           ),
                           Text(points.toString(), style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white)),
                         ],
