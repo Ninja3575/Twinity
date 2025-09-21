@@ -8,7 +8,6 @@ class DbService {
     final doc = await userRef.get();
 
     if (!doc.exists) {
-      // If user is new, create document with default points and partner code
       await userRef.set({
         ...data,
         'points': 0,
@@ -16,12 +15,10 @@ class DbService {
         'createdAt': FieldValue.serverTimestamp(),
       });
     } else {
-      // If user exists, just update their info
       await userRef.update(data);
     }
   }
 
-  /// **THIS FUNCTION WAS MISSING**
   Future<bool> doesUserExist(String userId) async {
     final userRef = _db.collection('users').doc(userId);
     final doc = await userRef.get();
