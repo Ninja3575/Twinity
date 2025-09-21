@@ -35,7 +35,10 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Twinity'),
+        title: const Text('TWINITY'),
+        // The actions property is removed to delete the button
+        backgroundColor: Colors.transparent,
+        elevation: 0,
       ),
       body: PageView(
         controller: _pageController,
@@ -70,8 +73,10 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.grey, // Added for better visibility
+        selectedItemColor: Colors.yellow[700],
+        unselectedItemColor: Colors.black,
+        backgroundColor: Colors.orange[300],
+        type: BottomNavigationBarType.fixed,
         onTap: _onItemTapped,
       ),
     );

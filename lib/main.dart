@@ -23,6 +23,8 @@ class TwinityApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.pink,
         brightness: Brightness.dark,
+        scaffoldBackgroundColor: Colors.orange[800], // Background color
+        cardColor: Colors.orange[300], // Card color
       ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
