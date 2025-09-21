@@ -43,15 +43,19 @@ class DefaultFirebaseOptions {
     }
   }
 
+  // lib/firebase_options.dart
+
+//...
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBkVT0hoekrgRcjUKk2quv_J6WQRctmeaM',
-    appId: '1:699003558638:web:6c9136367c6fd03dacb1ff',
-    messagingSenderId: '699003558638',
-    projectId: 'twinity-app',
-    authDomain: 'twinity-app.firebaseapp.com',
-    storageBucket: 'twinity-app.firebasestorage.app',
-    measurementId: 'G-CX47Q4JJFX',
+      apiKey: "AIzaSyBsbqTVszuJDkp8Ut19YnoH5Y35sNxuImA",
+      appId: "1:1008106990334:web:f04aaf6a36700115e8d3af",
+      messagingSenderId: "1008106990334",
+      projectId: "twinity-d2ba5", // <-- Correct projectId
+      authDomain: "twinity-d2ba5.firebaseapp.com",
+      storageBucket: "twinity-d2ba5.firebasestorage.app",
+      measurementId: "G-6LCD1DQQ1S"
   );
+//...
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBGLtz0fHn647iAJQ0M0wTW472H8kr5rRI',
