@@ -7,13 +7,19 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  firebase_core: ^4.1.0
-  firebase_auth: ^6.0.2
-  cloud_firestore: ^6.0.1
-  cloud_functions: ^6.0.1
-  google_sign_in: ^6.3.0
-  google_mobile_ads: ^6.0.0
-  in_app_purchase: ^3.0.7
+
+  # Updated Firebase Packages
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.8
+  cloud_firestore: ^4.15.8
+  cloud_functions: ^4.6.8
+  firebase_storage: ^11.6.9
+
+  # Other Packages
+  google_sign_in: ^6.2.1
+  google_mobile_ads: ^5.1.0
+  in_app_purchase: ^3.1.13
+  image_picker: ^1.0.7
 
 dev_dependencies:
   flutter_test:
@@ -22,6 +28,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-dependency_overrides:
-  js: ^0.7.2

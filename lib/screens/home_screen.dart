@@ -4,7 +4,7 @@ import '../services/auth_service.dart';
 import '../services/db_service.dart';
 import '../widgets/ad_banner.dart';
 import '../widgets/subscribe_button.dart';
-import 'login_screen.dart'; // <-- Add this import
+import 'login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,24 +15,6 @@ class HomeScreen extends StatelessWidget {
     final db = DbService();
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Twinity Home'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: () async {
-              await AuthService().signOut();
-              if (context.mounted) {
-                // Replace the current screen with the LoginScreen
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreen()),
-                );
-              }
-            },
-          )
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -55,7 +37,41 @@ class HomeScreen extends StatelessWidget {
                 },
               ),
             const SizedBox(height: 24),
-            const SubscribeButton(),
+            ElevatedButton(
+              onPressed: () {
+                // TODO: Implement game selection modal
+              },
+              child: const Text('Play Games - Earn Points'),
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // TODO: Implement connect partner functionality
+                    },
+                    child: const Text('Connect'),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // TODO: Implement create code functionality
+                    },
+                    child: const Text('Create Code'),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            ElevatedButton(
+              onPressed: () {
+                // TODO: Implement watch ad functionality
+              },
+              child: const Text('Watch Ad +100'),
+            ),
             const Spacer(),
             const AdBanner(),
           ],

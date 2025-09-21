@@ -1,26 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; // Make sure to import this
+import 'package:firebase_auth/firebase_auth.dart';
+import 'firebase_options.dart';
 import 'screens/login_screen.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
-import 'package:flutter/foundation.dart' show kIsWeb, defaultTargetPlatform;
+import 'screens/main_screen.dart'; // New screen
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // This is the crucial part: Initialize Firebase for all platforms
-  // using the generated options file.
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  // Initialize Google Mobile Ads SDK only on supported platforms
-  if (!kIsWeb &&
-      (defaultTargetPlatform == TargetPlatform.android ||
-          defaultTargetPlatform == TargetPlatform.iOS)) {
-    MobileAds.instance.initialize();
-  }
-
   runApp(const TwinityApp());
 }
 
@@ -31,8 +20,26 @@ class TwinityApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Twinity',
-      theme: ThemeData(primarySwatch: Colors.pink),
-      home: const LoginScreen(),
+      theme: ThemeData(
+        primarySwatch: Colors.pink,
+        brightness: Brightness.dark,
+      ),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            if (snapshot.hasData) {
+              return const MainScreen(); // Show main screen if logged in
+            }
+            return const LoginScreen(); // Show login screen otherwise
+          }
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+      ),
     );
   }
 }
