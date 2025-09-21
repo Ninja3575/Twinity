@@ -13,14 +13,12 @@ class _HomeScreenState extends State<HomeScreen> {
   final User? currentUser = FirebaseAuth.instance.currentUser;
   final DbService _dbService = DbService();
 
-  // Helper function to calculate daily points from active subscriptions
   int _calculateDailySubPoints(dynamic subsData) {
     if (subsData == null || subsData is! List) {
       return 0;
     }
-    // This is a placeholder logic. You should replace it with your actual subscription check.
     if (subsData.isNotEmpty) {
-      return 12000; // As seen in the screenshot
+      return 12000;
     }
     return 0;
   }
@@ -34,14 +32,17 @@ class _HomeScreenState extends State<HomeScreen> {
     return StreamBuilder<dynamic>(
       stream: _dbService.watchUserProfile(currentUser!.uid),
       builder: (context, snapshot) {
+        // **FIX:** Show a loading spinner if the data isn't ready yet.
+        if (!snapshot.hasData || (snapshot.hasData && !snapshot.data!.exists)) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         }
+
         if (snapshot.hasError) {
           return Center(child: Text("Error: ${snapshot.error}"));
-        }
-        if (!snapshot.hasData || snapshot.data?.data() == null) {
-          return const Center(child: Text("Loading profile..."));
         }
 
         var userData = snapshot.data!.data() as Map<String, dynamic>;
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Card(
-                color: Colors.black.withOpacity(0.5), // Darker card as in the screenshot
+                color: Colors.black.withOpacity(0.5),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -70,7 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               children: [
                                 Text("Welcome, ${name.toUpperCase()}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white)),
                                 const Text("Signed in", style: TextStyle(color: Colors.white70)),
-                                // Conditionally show daily sub points
                                 if (dailySubPoints > 0)
                                   Text("Daily from subs: $dailySubPoints pts", style: const TextStyle(color: Colors.white70)),
                               ],
